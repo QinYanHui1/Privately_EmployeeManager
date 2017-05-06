@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-8-8 21:00:16 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.imooc.employeeManager.entity.Employee" table="employee">
+        <id name="eid" type="int">
+            <generator class="native" />
+        </id>
+        
+        <property name="ename" length="20" />
+        <property name="sex" length="10" />
+        <property name="birthday"  />
+        <property name="joinDate"  />
+        <property name="eno" length="10" />
+        <property name="username" length="20" />
+        <property name="password" length="20" />
+   		
+   		<!-- 关联映射关系 -->
+   		<many-to-one name="department" class="com.imooc.employeeManager.entity.Department" column="dno"/>
+    </class>
+</hibernate-mapping>

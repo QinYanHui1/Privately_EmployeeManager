@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+	"http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<!-- START SNIPPET: xworkSample -->
+<struts>
+	<constant name="struts.devMode" value="true"></constant>
+	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
+    <package name="default"  namespace="/"  extends="struts-default">
+
+    
+    </package>
+
+	 <package name="ssh"  namespace="/"  extends="default">
+		<interceptors>
+			<interceptor name="auth" class="com.imooc.employeeManager.interceptor.AuthInterceptor">			
+			</interceptor> 
+			<interceptor-stack name="myInterceptorStack">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="auth"></interceptor-ref>
+			</interceptor-stack>   	
+    	</interceptors>
+    	
+
+		<action name="employee_login" class="employeeAction"  method="login">					
+			<result name="login_success">/frame.jsp</result>
+			<result name="login_failure" type="redirect">/index.jsp</result>
+		</action> 
+		
+		
+		<action name="employee_*" class="employeeAction"  method="{1}">		
+			<interceptor-ref name="myInterceptorStack"></interceptor-ref> 
+			<result name="editUI"> /jsp/employee/edit.jsp</result>
+			<result name="updateSuccess" type="redirectAction">employee_findAll.action</result>
+			<result name="login">/index.jsp</result>
+			<result name="login_success">/frame.jsp</result>			
+			<result name="findAllEmployee">/jsp/employee/list.jsp</result>
+			<result name="addUI">/jsp/employee/addUI.jsp</result>
+			<result name="saveSuccess" type="redirectAction">employee_findAll.action</result>
+			<result name="deleteSuccess" type="redirectAction">employee_findAll.action</result>
+			<allowed-methods>*</allowed-methods>
+		</action> 
+		
+		<action name="department_*" class="departmentAction"  method="{1}">	
+			<interceptor-ref name="myInterceptorStack"></interceptor-ref> 
+			<result name="login">/index.jsp</result>
+			<result name="findAllDepartment">/jsp/department/list.jsp</result>
+			<result name="addUI">/jsp/department/addUI.jsp</result>
+			<result name="saveSuccess" type="redirectAction">department_findAll.action</result>
+			<result name="updateSuccess" type="redirectAction">department_findAll.action</result>
+			<result name="deleteSuccess" type="redirectAction">department_findAll.action</result>
+			<result name="editSuccess">/jsp/department/edit.jsp</result>
+
+			<allowed-methods>*</allowed-methods>
+		</action> 
+	 </package>
+ 	
+</struts>
+
+<!-- END SNIPPET: xworkSample -->
+

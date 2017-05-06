@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/j2ee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	id="WebApp_ID" version="3.0">
+  <display-name>ssh</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+
+
+  <!-- spring框架核心配置
+  	作用：在启动Web 容器时，自动装配Spring applicationContext.xml 的配置信息
+   -->
+  <listener>
+  	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  
+    <!-- spring框架核心配置 
+  	作用：不使用默认加载，改为加载当前路径的applicationContext.xml
+ -->
+ <context-param>
+  	<param-name>contextConfigLocation</param-name>
+  	<param-value>classpath:applicationContext.xml</param-value>
+  </context-param>
+ 
+ 
+ <!-- 拦截器功能：让session在视图层开启，不加的话，员工界面的部门因为加载延迟显示不出来  --> 
+   <filter>
+  	<filter-name>OpenSessionInViewFilter</filter-name>
+  	<filter-class>org.springframework.orm.hibernate5.support.OpenSessionInViewFilter</filter-class>
+  	<init-param> 
+　　　　　　<param-name>singleSession</param-name> 
+　　　　　　<param-value>true</param-value> 
+　　　</init-param>　
+　
+ <!--	<init-param> 
+　　　　　　<param-name>flushMode </param-name> 
+　　　　　　<param-value>AUTO</param-value> 
+　　　　</init-param> 
+--> 
+  </filter>
+
+   <filter-mapping>
+  	<filter-name>OpenSessionInViewFilter</filter-name>
+  	<url-pattern>*.action</url-pattern>
+  </filter-mapping>
+  
+
+   
+  <!-- struts2核心文件配置-->
+  <filter>
+  	<filter-name>struts</filter-name>
+  	<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+  </filter>
+  
+  <filter-mapping>
+  	<filter-name>struts</filter-name>
+  	<url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
+  
+
+   
+</web-app>
